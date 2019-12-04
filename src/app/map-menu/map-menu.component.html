@@ -1,0 +1,16 @@
+<div class="header">
+  <button id="btnStartDraw" (click)="startDrawing()"
+          [hidden]="this.view.mode !== mapViewmode.scroll">Start Drawing</button>
+  <button id="btnStopDraw"  (click)="stopDrawing()"
+  [hidden]="this.view.mode !== mapViewmode.draw">Stop Drawing</button>
+  <button id="btnStartEdit" (click)="startEditing()"
+  [hidden]="this.view.mode !== mapViewmode.scroll">Start Editing</button>
+  <button id="btnStopEdit" (click)="stopEditing()"
+  [hidden]="this.view.mode !== mapViewmode.edit">Stop Editing</button>
+  <button id="btnStartDelete" (click)="startDeleting()"
+  [hidden]="this.view.mode !== mapViewmode.scroll">Start Deleting</button>
+  <button id="btnStopDelete" (click)="stopDeleting()"
+  [hidden]="this.view.mode !== mapViewmode.delete">Stop Deleting</button>
+</div>
+
+<map-view></map-view>
