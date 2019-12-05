@@ -16,3 +16,7 @@ button:hover {
   background-color: #ffffff;
   font-style: italic;
 }
+
+#colorPicker {
+  width: 100px;
+}
