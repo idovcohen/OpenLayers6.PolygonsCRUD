@@ -4,9 +4,11 @@ import {Draw} from 'ol/interaction';
 
 @Injectable()
 export class  PolygonDrawService {
+
   private map: Map;
   private draw: Draw;
-
+  constructor() {
+  }
   public init(data: any): void {
     this.map = data.map as Map;
     this.draw = new Draw({type: 'Polygon',

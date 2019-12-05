@@ -11,6 +11,7 @@
   [hidden]="this.view.mode !== mapViewmode.scroll">Start Deleting</button>
   <button id="btnStopDelete" (click)="stopDeleting()"
   [hidden]="this.view.mode !== mapViewmode.delete">Stop Deleting</button>
-</div>
+
+  <input type="color" id="colorPicker" (change)="this.colorSelect()" value="#ff0000"></div>
 
 <map-view></map-view>

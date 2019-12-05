@@ -6,6 +6,8 @@ import { MapMenuComponent } from './map-menu/map-menu.component';
 import { PolygonDrawService } from './services/polygon-draw.service';
 import { PolygonEditService } from './services/polygon-edit.service';
 import { PolygonDeleteService } from './services/polygon-delete.service';
+import { StoreModule } from '@ngrx/store';
+import { colorSelectReducer } from './ngrx-things/reducers/color-select.reducer';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,8 @@ import { PolygonDeleteService } from './services/polygon-delete.service';
     MapMenuComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    StoreModule.forRoot({select: colorSelectReducer}),
   ],
   providers: [PolygonDrawService,
               PolygonEditService,
