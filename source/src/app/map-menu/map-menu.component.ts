@@ -1,6 +1,6 @@
 import { ColorResponse } from './../map-view/color-response';
 import { ColorService } from './../services/color.service';
-import { ActionType } from '../ngrx-things/actions/action-type';
+import { ActionType } from '../colors/action-type';
 import { MapViewMode } from '../map-view/map-view-mode';
 import { Component, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { MapViewComponent } from '../map-view/map-view.component';
@@ -29,7 +29,10 @@ export class MapMenuComponent implements AfterViewInit, OnDestroy {
     this.sub.add(this.colorSvc.getColor()
                   .subscribe((res: ColorResponse) => {
                               const picker: HTMLInputElement = document.getElementById('colorPicker') as HTMLInputElement;
-                              picker.value = res.selectedColor; }));
+                              picker.value = res.selectedColor;
+                              const action = {type: ActionType.colorSelect, selectedColor: picker.value};
+                              this.store.dispatch(action);
+                             }));
   }
 
   public startDrawing(): void {
@@ -53,9 +56,9 @@ export class MapMenuComponent implements AfterViewInit, OnDestroy {
 
   public colorSelect(): void {
     const picker: HTMLInputElement = document.getElementById('colorPicker') as HTMLInputElement;
-    const action = {type: ActionType.colorSelect, selectedColor: picker.value};
     this.sub.add(this.colorSvc.setColor(picker.value).subscribe(() => {},
                                                         () => { console.error('Could not send the selected color to the server.'); }));
+    const action = {type: ActionType.colorSelect, selectedColor: picker.value};
     this.store.dispatch(action);
   }
 

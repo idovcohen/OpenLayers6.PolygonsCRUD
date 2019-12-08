@@ -1,0 +1,78 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "OpenLayers server Application API",
+    "description": "OpenLayers server Application API"
+  },
+  "host": "localhost:1234",
+  "basePath": "/api/v1",
+  "tags": [],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/colors": {
+      "post": {
+        "tags": [
+          "Colors"
+        ],
+        "description": "Set a new polygon color in the system",
+        "parameters": [
+          {
+            "name": "selectedColor",
+            "in": "body",
+            "description": "The selected color.",
+            "schema": {
+              "$ref": "#/definitions/Color"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "The color was set succcessfully.",
+            "schema": {
+              "$ref": "#/definitions/Color"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Colors"
+        ],
+        "summary": "Get the selected color in the system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Color"
+            }
+          }
+        }
+      }
+    }    
+  },
+  "definitions": {
+    "Color": {
+      "required": [
+        "selectedColor"
+      ],
+      "properties": {
+        "selectedColor": {
+          "type": "string",
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

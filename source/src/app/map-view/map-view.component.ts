@@ -1,4 +1,6 @@
 import { Component, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import Map from 'ol/Map';
 import View from 'ol/View';
 import {Snap} from 'ol/interaction';
@@ -6,13 +8,13 @@ import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
 import {OSM, Vector as VectorSource} from 'ol/source';
 import {Style, Stroke, Fill} from 'ol/style';
 import {MapViewMode} from './map-view-mode';
+import { PolygonDataService } from '../services/polygon-data.service';
+import { PolygonTrackingService } from '../services/polygon-tracking.service';
 import { AppStateInterface } from '../interfaces/app-state.interface';
 import { MapViewInterface } from '../interfaces/map-view.interface';
 import { PolygonDrawService } from '../services/polygon-draw.service';
 import { PolygonEditService } from '../services/polygon-edit.service';
 import { PolygonDeleteService } from '../services/polygon-delete.service';
-import { Subscription } from 'rxjs';
-import { Store } from '@ngrx/store';
 
 @Component(
   {
@@ -34,7 +36,9 @@ export class MapViewComponent implements OnInit, OnDestroy, MapViewInterface, Af
   constructor(private readonly store: Store<AppStateInterface>,
               private readonly drawSvc: PolygonDrawService,
               private readonly editSvc: PolygonEditService,
-              private readonly deleteSvc: PolygonDeleteService) {
+              private readonly deleteSvc: PolygonDeleteService,
+              private readonly trackSvc: PolygonTrackingService,
+              private readonly dataSvc: PolygonDataService) {
      this.modeField = MapViewMode.scroll;
      this.vecSource = new VectorSource({wrapX: false});
   }
@@ -67,7 +71,8 @@ export class MapViewComponent implements OnInit, OnDestroy, MapViewInterface, Af
     this.drawSvc.init({map: this.map, source: this.vecSource});
     this.editSvc.init({map: this.map, source: this.vecSource});
     this.deleteSvc.init({map: this.map, source: this.vecSource});
-
+    this.trackSvc.init({source: this.vecSource});
+    this.dataSvc.load(this.vecSource);
     const snap: Snap = new Snap({source: this.vecSource});
     this.map.addInteraction(snap);
   }

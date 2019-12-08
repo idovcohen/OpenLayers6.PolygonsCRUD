@@ -34,14 +34,29 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="package.json" />
+    <Content Include="polygons\models\layer.model.ts">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="README.md" />
+    <Content Include="swagger.json">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="models\" />
+    <Folder Include="colors\" />
+    <Folder Include="colors\models\" />
+    <Folder Include="polygons\" />
+    <Folder Include="polygons\models\" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="models\color.ts">
+    <TypeScriptCompile Include="colors\color-route.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="colors\models\color.model.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="polygons\polygon-route.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
   </ItemGroup>
