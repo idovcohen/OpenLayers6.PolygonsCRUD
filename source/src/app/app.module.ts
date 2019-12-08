@@ -1,3 +1,5 @@
+import { PolygonDataService } from './services/polygon-data.service';
+import { PolygonTrackingService } from './services/polygon-tracking.service';
 import { MapViewComponent } from './map-view/map-view.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -7,9 +9,10 @@ import { PolygonDrawService } from './services/polygon-draw.service';
 import { PolygonEditService } from './services/polygon-edit.service';
 import { PolygonDeleteService } from './services/polygon-delete.service';
 import { ColorService } from './services/color.service';
-import { colorSelectReducer } from './ngrx-things/reducers/color-select.reducer';
+import { colorSelectReducer } from './colors/color-select.reducer';
 import { StoreModule } from '@ngrx/store';
 import { HttpClientModule } from '@angular/common/http';
+import { polygonReducer } from './polygons/polygon.reducer';
 
 @NgModule({
   declarations: [
@@ -19,12 +22,15 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     BrowserModule,
-    StoreModule.forRoot({select: colorSelectReducer}),
+    StoreModule.forRoot({select: colorSelectReducer,
+                        polygon: polygonReducer}),
     HttpClientModule,
   ],
   providers: [PolygonDrawService,
               PolygonEditService,
               PolygonDeleteService,
+              PolygonTrackingService,
+              PolygonDataService,
               ColorService],
   bootstrap: [AppComponent]
 })

@@ -6,8 +6,6 @@ import {Select} from 'ol/interaction';
 export class  PolygonDeleteService {
   private select: Select;
   private map: Map;
-  constructor() {
-  }
 
   public init(data: any): void {
     this.select = new Select();

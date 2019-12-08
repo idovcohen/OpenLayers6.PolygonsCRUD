@@ -1,40 +1,25 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 require('dotenv').config();
-const ColorModel = require('../color.server/models/color');
+
+const colorsRoute = require('../color.server/colors/color-route');
+const polygonsRoute = require('../color.server/polygons/polygon-route');
 const port = 1234;
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-let selectedColor = 'red';
+app.use('/api/v1', colorsRoute);
+app.use('/api/v1', polygonsRoute);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+//app.use('/api/v1', router);
 console.log('Running color server.');
 setupMongo();
-
-app.get('/color', async (req, res) => {
-    try {
-        const colors = await ColorModel.find();
-        selectedColor = colors[0].selectedColor;
-        console.log('Getting selected color: ' + selectedColor);
-    }
-    catch (err) {
-        console.error('Could not read the color from the DB. (using default color "red"): ' + err);
-    }
-    res.send({ selectedColor : selectedColor });
-});
-
-app.post('/color', async (req, res) => {
-    let body = req.body;
-    selectedColor = body.selectedColor;
-    await ColorModel.remove({}, () => { });
-    const color = new ColorModel({ selectedColor: selectedColor });
-    await color.save();
-
-    console.log('Setting selected color: ' + selectedColor);
-    res.sendStatus(200);
-});
 
 let server = app.listen(port, function () {
     console.log("Server listening at http://%s:%s", server.address().address, port);
